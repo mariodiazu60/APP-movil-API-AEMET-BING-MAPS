@@ -1,0 +1,11 @@
+{
+     "android": {
+      "release": {
+        "alias": "DISM",
+        "keystore": "C:\\Program Files\\Java\\jdk-10.0.1\\bin\\dism.keystore",
+        "keystoreType": "",
+        "password": "dismP1",
+        "storePassword": "dismP1"
+      }
+     }
+ }

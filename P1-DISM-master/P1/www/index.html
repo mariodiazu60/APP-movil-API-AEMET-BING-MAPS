@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <!--JQUERY MOBILE-->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <!--MAPAS-->
+    <script type='text/javascript'
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap'
+            async defer></script>
+
+    <!--DATA TABLES-->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+     <!--MI JS-->
+    <script type="text/javascript" src="scripts/index.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+<body>
+
+
+    <!--PAGINA DE INICIO-->
+    <div data-role="page" id="index">
+        <div data-role="header">
+            <h1>Datos AEMET</h1>
+        </div>
+        <!--CUERPO DEL INICIO-->
+        <div data-role="main" class="ui-content">
+            <!--BOTONES-->
+            <a href="#municipios" class="ui-btn" data-transition="fade" onclick="borrarDT(1), tabla_municipios()">Municipios</a>
+            <a href="#estaciones" class="ui-btn" data-transition="fade" onclick="borrarDT(2), tabla_estaciones()" ;">Info. estaciones</a>
+            <a href="#mapa" class="ui-btn" data-transition="fade" onclick="GetMap();">Mapa estaciones</a>
+            <a href="#datos" class="ui-btn" data-transition="fade">Datos obvs. 24h</a>
+            <a href="#sobre_mi" class="ui-btn" data-transition="fade">Sobre mi</a>
+        </div>
+        <div data-role="footer">
+            <h1></h1>
+        </div>
+    </div>
+
+    <!--SEGUNDA PAGINA-->
+    <div data-role="page" id="municipios">
+        <div data-role="header">
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+            <h1>Datos AEMET</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <table id="dataGrid1" data-role="table" class="hover ui-responsive stripe row-border compact stripe" style="width:100%">
+                <thead>
+                    <tr id="columnas" style="border-bottom:double">
+                        <th>Nombre</th>
+                        <th>Latidud</th>
+                        <th>Longitud</th>
+                        <th>Habitantes</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div data-role="footer">
+            <h1></h1>
+        </div>
+    </div>
+
+
+    <!--TERCERA PAGINA-->
+    <div data-role="page" id="estaciones">
+        <div data-role="header">
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+            <h1>Datos AEMET</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <table id="dataGrid2" data-role="table" class="hover ui-responsive stripe row-border compact stripe" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Latidud</th>
+                        <th>Longitud</th>
+                        <th>Idema</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div data-role="footer">
+            <h1></h1>
+        </div>
+    </div>
+
+
+    <!--CUARTA PAGINA-->
+    <div data-role="page" id="mapa">
+        <div data-role="header">
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+            <h1>MAPA ESTACIONES</h1>
+        </div>
+        <!--Aqui sacamos el mapa-->
+        <div id="myMap" style="position:absolute;max-width:100%;height:100%"></div>
+    </div>
+
+
+    <!--QUINTA PAGINA-->
+    <div data-role="page" id="datos" data-theme="a">
+        <div data-role="header">
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+            <h1>Observaciones</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h1><b>Observaciones de las &uacute;ltimas 24 horas:</b></h1>
+            <form name="formulario">
+                <input type="text" id="idema" placeholder="Idema">
+            </form>
+            <a href="#muestra_datos" class="ui-btn ui-shadow ui-corner-all" onclick="borrarDT(3), form_observaciones();">Consultar</a>
+        </div>
+    </div>
+    <div data-role="page" id="muestra_datos" data-theme="a">
+        <div data-role="header">
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+            <h1>Observaciones</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div role="main" class="ui-content">
+                <table id="dataGrid3" data-role="table" class="hover ui-responsive ui-responsive stripe row-border compact stripe" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Idema</th>
+                            <th>Ubicación</th>
+                            <th>Fecha y hora</th>
+                            <th>Temperatura</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div data-role="footer">
+        </div>
+    </div>
+
+
+
+
+    <!--DIALOGO-->
+    <div data-role="page" data-dialog="true" id="sobre_mi">
+        <div data-role="header">
+            <h1>Sobre mi</h1>
+        </div>
+        <div data-role="main" class="ui-content">
+            <figure>
+                <img src="https://bit.ly/2OfzunA" alt="foto_sobre_mi" width="150" height="150">
+            </figure>
+            <ul>
+                <li>Nombre: Mario Díaz-Ufano Nuevo</li>
+                <li>Dni: 48794559J</li>
+                <li>Correo: mdn6@alu.ua.es</li>
+            </ul>
+            <a href="#index" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-transition="fade">Inicio</a>
+        </div>
+    </div>
+
+    <!--DIALOGO PARA EL MAPA-->
+    <div data-role="dialog" id="popup2">
+        <div data-role="header" data-theme="b">
+            <h1>Localizaci&oacute;n</h1>
+        </div>
+        <div role="main" class="ui-content" style="position: relative;padding-bottom: 56.25%;padding-top: 30px;height: 0;overflow: hidden;">
+            <div id="myMap2" style="position:absolute;top: 0;left: 0;width:100%;height:100%;"></div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
